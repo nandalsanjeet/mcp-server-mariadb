@@ -1,0 +1,30 @@
+# Install Docker in Ubuntu Server
+
+   91  sudo apt install ca-certificates curl
+   92  sudo install -m 0755 -d /etc/apt/keyrings
+   93  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+   94  chmod a+r /etc/apt/keyrings/docker.asc
+   95  tee /etc/apt/sources.list.d/docker.sources <<EOF
+   96  Types: deb
+   97  URIs: https://download.docker.com/linux/ubuntu
+   98  Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-#VERSION_CODENAME}")
+   99  Components: stable
+  100  Architectures: $(dpkg --print-architecture)
+  101  Signed-By: /etc/apt/keyrings/docker.asc
+  102  EOF
+
+  103  apt update
+  104  apt install docker-ce docker-ce-cli containered.io docker-buildx-plugin docker-compose-plugin
+  105  apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+  107  docker info
+
+  110  mount /dev/vda4 /mnt/
+  111  mv /var/lib/docker/image/identity-cache.db /mnt/
+  112  umount /mnt 
+  113  mount /dev/vda4 /var/lib/docker/image/
+  114  cat >> /etc/fstab 
+  115  mount -a
+
+  116  systemctl enable --now docker.service
+  118  systemctl status docker.service
