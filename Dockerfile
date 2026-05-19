@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM quay.io/nandal_sanjeet/python:3.10
 
 RUN pip3 install pymysql mcp httpx fastmcp && mkdir /opt/my-mcp-server
 
